@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WindowsFormsApplication1;
+using System.Threading.Tasks;
 
-namespace A_BFS
+namespace BFS_Test
 {
 	class State
 	{
-		public List<int> trangThai { get; set; }
-        public State nutCha { get; set; }
-		//khởi tạo mặc định
-        public State() { }
+		public List<int> trangThai;
+		public State nutCha;
 
-		//khởi tạo từ 1 mảng truyền vào
-		public State(List<int> trangThai)
+		public State(List<int> trangThai, State nutCha)
 		{
 			this.trangThai = trangThai;
+			this.nutCha = nutCha;
 		}
 
 		//hàm này để tách từ 1 mảng truyền vào theo mỗi bước đi(trái, phải, lên, xuống) sẽ tạo ra bao nhiêu mảng nữa
-		//mỗi bước đi được sẽ đưa vào mangPhatSinh
 		public List<List<int>> PhatSinhMangTuMotMang(List<int> mangBatKy)
 		{
 			List<List<int>> mangPhatSinh = new List<List<int>>();
@@ -33,7 +30,7 @@ namespace A_BFS
 				copy[i] = copy[i + 1];
 				copy[i + 1] = temp;
 				mangPhatSinh.Add(copy);
-
+				
 			}
 			//để đi sang trái
 			if (i % 3 > 0)
@@ -71,10 +68,9 @@ namespace A_BFS
 			List<List<int>> mangPhatSinh = PhatSinhMangTuMotMang(this.trangThai);
 			for (int i = 0; i < mangPhatSinh.Count; i++)
 			{
-				State dongGoi = new State(mangPhatSinh[i]);
+				State dongGoi = new State(mangPhatSinh[i], null);				
 				phatSinh.Add(dongGoi);
-				//gán nút cha là dongGoi
-				dongGoi.nutCha = this;
+				//dongGoi.nutCha = dongGoi;
 			}
 			return phatSinh;
 		}
@@ -92,15 +88,14 @@ namespace A_BFS
 			}
 			return denDich;
 		}
-		//in ra một bước đi (1 state) của mỗi lần duyệt
 		public void inRaMotState()
 		{
 			int i = 0;
-			foreach (var item in this.trangThai)
+			foreach(var item in this.trangThai)
 			{
-				Console.Write(item + " ");
+				Console.Write(item +" ");
 				i += 1;
-				if (i % 3 == 0)
+				if(i%3==0)
 					Console.Write("\n");
 			}
 			Console.Write("\n\n");
@@ -111,22 +106,19 @@ namespace A_BFS
 	{
 		State trangThaiDau;
 		State trangThaiDich;
-		//danh sách các trạng thái đã duyệt
-        List<State> trangThaiDaDuyet = null;
 
+		List<State> Path = new List<State>();
 
-        public BFS(State trangThaiDau, State trangThaiDich)
+		public BFS(State trangThaiDau, State trangThaiDich)
 		{
 			this.trangThaiDau = trangThaiDau;
 			this.trangThaiDich = trangThaiDich;
-            trangThaiDaDuyet = new List<State>();
-        }
+		}
 
-		//kiểm tra 2 trạng thái có giống nhau hay không?
 		public bool KiemTraTrangThaiTrung(State a, State b)
 		{
 			bool giongnhau = true;
-			for (int i = 0; i < b.trangThai.Count; i++)
+			for (int i = 0; i < b.trangThai.Count ; i++)
 			{
 				if (a.trangThai[i] != b.trangThai[i])
 				{
@@ -135,23 +127,20 @@ namespace A_BFS
 			}
 			return giongnhau;
 		}
-		//kiểm tra một trạng thái đã có trong danh sách các trạng thái đã duyệt hay chưa?
-		public bool KiemTraTrangThaiChuaTrongList(List<State> list, State check)
+		public  bool KiemTraTrangThaiChuaTrongList(Queue<State>list, State check)
 		{
 			bool contains = false;
 			foreach (var item in list)
 			{
-				if (KiemTraTrangThaiTrung(item, check) == true)
+				if (KiemTraTrangThaiTrung(item, check)==true)
 					contains = true;
 			}
 			return contains;
 		}
-
-
 		public List<State> Solve()
 		{
-			List<State> ketQua = new List<State>();
-			//hàng đợi enqueue thêm vào cuối, và dequeue lấy ra ở đầu và remove luôn ptu đó
+			//List<State> ketQua = new List<State>();
+			Queue<State> Visited = new Queue<State>();
 			Queue<State> danhSachDinhDuyet = new Queue<State>();
 
 			danhSachDinhDuyet.Enqueue(trangThaiDau);
@@ -159,8 +148,7 @@ namespace A_BFS
 			while (danhSachDinhDuyet.Count > 0)
 			{
 				State ptLayRa = danhSachDinhDuyet.Dequeue();
-                trangThaiDaDuyet.Add(ptLayRa);
-				//dòng này để in ra các trạng thái mảng đã duyệt dưới dạng ma trận 3x3
+				Visited.Enqueue(ptLayRa);
 				//ptLayRa.inRaMotState();
 
 				if (ptLayRa.KiemTraDenDich(trangThaiDich) == true)
@@ -168,47 +156,65 @@ namespace A_BFS
 					Console.WriteLine("Ban da chien thang!.....");
 					break;
 				}
-
-				//ptLayRa đem đi phân tách coi được mấy trạng thái
 				List<State> hungPhanTachTrangThai = ptLayRa.PhanTachTrangThai();
-				foreach (var item in hungPhanTachTrangThai)
+				for (int i = 0; i < hungPhanTachTrangThai.Count; i++)
 				{
-					if (item.KiemTraDenDich(trangThaiDich) == true)
+					if (hungPhanTachTrangThai[i].KiemTraDenDich(trangThaiDich) == true)
 					{
 						Console.WriteLine("Ban da chien thang!.....");
-						//lằn vết lúc này sẽ trả về danh sách đường đi nhưng bị ngược => qua nút Giải reverse nó
 						LanVet(ketQua, item);
-						//in ra đường đi tìm được trên console dưới dạng ma trận 3x3
-						inRaDuongDi(ketQua);
 						return ketQua;
 					}
-					if (!KiemTraTrangThaiChuaTrongList(trangThaiDaDuyet, item) )
-					{                    
-						danhSachDinhDuyet.Enqueue(item);
-					}
+					if(!KiemTraTrangThaiChuaTrongList(Visited, hungPhanTachTrangThai[i]))
+					{
+						danhSachDinhDuyet.Enqueue(hungPhanTachTrangThai[i]);
+						Path[i] = 
+					}		
 				}
 			}
 			return ketQua;
 		}
-		//lằn vết để đưa mỗi nút cha đã gán trước đó vào trong list kết quả
-		public void LanVet(List<State> duongDi, State n)
-		{
-			State hienTai = n;
-			duongDi.Add(hienTai);
 
-			while (hienTai.nutCha != null)
+		public void LanVet(/*List<State> duongDi, State n*/)
+		{
+			//State hienTai = n;
+			//duongDi.Add(hienTai);
+
+			//while (hienTai.nutCha != null)
+			//{
+			//	hienTai = hienTai.nutCha;
+			//	duongDi.Add(hienTai);
+			//}
+			State i = trangThaiDich;
+			while(KiemTraTrangThaiTrung(trangThaiDau, trangThaiDich) == false)
 			{
-				hienTai = hienTai.nutCha;
-				duongDi.Add(hienTai);
+				i.inRaMotState();
+				i = Path[i];
 			}
 		}
-		//in ra đường đi đã tìm được
-		public void inRaDuongDi(List<State>temp)
+
+		//public void inRaDuongDi()
+		//{
+		//	List<State> ketQuaCuoiCung = Solve();
+		//	foreach(var item in ketQuaCuoiCung)
+		//	{
+		//		item.inRaMotState();
+		//	}
+		//}
+	}
+
+	class Program
+	{
+		static void Main(string[] args)
 		{
-			foreach (var item in temp)
-			{
-				item.inRaMotState();
-			}
+			List<int> mangDau = new List<int> { 1, 2, 3, 7, 4, 6, 5, 9, 8 };
+			List<int> mangCuoi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			State trThaiDau = new State(mangDau,null);
+			State trThaiCuoi = new State(mangCuoi,null);
+			BFS bfs = new BFS(trThaiDau, trThaiCuoi);
+			List<State> ketQuaCuoiCung = bfs.Solve();
+			//bfs.inRaDuongDi();
+			Console.ReadKey();
 		}
 	}
 }

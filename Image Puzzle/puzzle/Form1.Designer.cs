@@ -36,6 +36,9 @@
 			this.tmrThoiGianDem = new System.Windows.Forms.Timer(this.components);
 			this.btnTamDung = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
+			this.btnPrev = new System.Windows.Forms.Button();
+			this.btnNext = new System.Windows.Forms.Button();
+			this.btnGiaiToiUu = new System.Windows.Forms.Button();
 			this.gbKhung.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbx1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbx2)).BeginInit();
@@ -68,6 +71,7 @@
 			// 
 			// pbx1
 			// 
+			this.pbx1.Image = global::WindowsFormsApplication1.Properties.Resources._1;
 			this.pbx1.Location = new System.Drawing.Point(17, 23);
 			this.pbx1.Name = "pbx1";
 			this.pbx1.Size = new System.Drawing.Size(130, 130);
@@ -78,6 +82,7 @@
 			// 
 			// pbx2
 			// 
+			this.pbx2.Image = global::WindowsFormsApplication1.Properties.Resources._2;
 			this.pbx2.Location = new System.Drawing.Point(149, 23);
 			this.pbx2.Name = "pbx2";
 			this.pbx2.Size = new System.Drawing.Size(130, 130);
@@ -169,10 +174,10 @@
 			// 
 			// btnChoiLai
 			// 
-			this.btnChoiLai.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			this.btnChoiLai.BackColor = System.Drawing.Color.LightCoral;
 			this.btnChoiLai.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btnChoiLai.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnChoiLai.Location = new System.Drawing.Point(520, 412);
+			this.btnChoiLai.Location = new System.Drawing.Point(495, 412);
 			this.btnChoiLai.Name = "btnChoiLai";
 			this.btnChoiLai.Size = new System.Drawing.Size(59, 42);
 			this.btnChoiLai.TabIndex = 1;
@@ -182,10 +187,10 @@
 			// 
 			// btnThoat
 			// 
-			this.btnThoat.BackColor = System.Drawing.Color.Turquoise;
+			this.btnThoat.BackColor = System.Drawing.Color.LightCoral;
 			this.btnThoat.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btnThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnThoat.Location = new System.Drawing.Point(818, 412);
+			this.btnThoat.Location = new System.Drawing.Point(843, 412);
 			this.btnThoat.Name = "btnThoat";
 			this.btnThoat.Size = new System.Drawing.Size(59, 42);
 			this.btnThoat.TabIndex = 1;
@@ -222,10 +227,10 @@
 			// 
 			// btnTamDung
 			// 
-			this.btnTamDung.BackColor = System.Drawing.SystemColors.Control;
+			this.btnTamDung.BackColor = System.Drawing.Color.LightCoral;
 			this.btnTamDung.Enabled = false;
 			this.btnTamDung.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnTamDung.Location = new System.Drawing.Point(622, 412);
+			this.btnTamDung.Location = new System.Drawing.Point(576, 412);
 			this.btnTamDung.Name = "btnTamDung";
 			this.btnTamDung.Size = new System.Drawing.Size(66, 42);
 			this.btnTamDung.TabIndex = 4;
@@ -235,22 +240,64 @@
 			// 
 			// button1
 			// 
-			this.button1.BackColor = System.Drawing.Color.LightPink;
+			this.button1.BackColor = System.Drawing.Color.LightCoral;
 			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button1.Location = new System.Drawing.Point(723, 412);
+			this.button1.ForeColor = System.Drawing.SystemColors.Control;
+			this.button1.Location = new System.Drawing.Point(669, 412);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(59, 42);
 			this.button1.TabIndex = 1;
-			this.button1.Text = "Giải";
+			this.button1.Text = "Giải BFS";
 			this.button1.UseVisualStyleBackColor = false;
 			this.button1.Click += new System.EventHandler(this.btnGiai_Click);
+			// 
+			// btnPrev
+			// 
+			this.btnPrev.BackColor = System.Drawing.Color.LightCoral;
+			this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnPrev.Location = new System.Drawing.Point(217, 450);
+			this.btnPrev.Name = "btnPrev";
+			this.btnPrev.Size = new System.Drawing.Size(75, 33);
+			this.btnPrev.TabIndex = 5;
+			this.btnPrev.Text = "<< Đi Lui";
+			this.btnPrev.UseVisualStyleBackColor = false;
+			this.btnPrev.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// btnNext
+			// 
+			this.btnNext.BackColor = System.Drawing.Color.LightCoral;
+			this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnNext.Location = new System.Drawing.Point(314, 450);
+			this.btnNext.Name = "btnNext";
+			this.btnNext.Size = new System.Drawing.Size(79, 33);
+			this.btnNext.TabIndex = 6;
+			this.btnNext.Text = "Đi Tới >>";
+			this.btnNext.UseVisualStyleBackColor = false;
+			this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+			// 
+			// btnGiaiToiUu
+			// 
+			this.btnGiaiToiUu.BackColor = System.Drawing.Color.LightPink;
+			this.btnGiaiToiUu.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.btnGiaiToiUu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnGiaiToiUu.ForeColor = System.Drawing.SystemColors.Control;
+			this.btnGiaiToiUu.Location = new System.Drawing.Point(756, 412);
+			this.btnGiaiToiUu.Name = "btnGiaiToiUu";
+			this.btnGiaiToiUu.Size = new System.Drawing.Size(59, 42);
+			this.btnGiaiToiUu.TabIndex = 7;
+			this.btnGiaiToiUu.Text = "Giải Tối Ưu";
+			this.btnGiaiToiUu.UseVisualStyleBackColor = false;
+			this.btnGiaiToiUu.Click += new System.EventHandler(this.button2_Click_1);
 			// 
 			// frmPuzzleGame
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(914, 495);
+			this.Controls.Add(this.btnGiaiToiUu);
+			this.Controls.Add(this.btnNext);
+			this.Controls.Add(this.btnPrev);
 			this.Controls.Add(this.btnTamDung);
 			this.Controls.Add(this.lblThoiGianDem);
 			this.Controls.Add(this.lblBuocDi);
@@ -303,6 +350,9 @@
         private System.Windows.Forms.Timer tmrThoiGianDem;
         private System.Windows.Forms.Button btnTamDung;
 		private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.Button btnNext;
+		private System.Windows.Forms.Button btnGiaiToiUu;
 	}
 }
 
