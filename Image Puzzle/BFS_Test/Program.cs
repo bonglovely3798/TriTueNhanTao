@@ -139,7 +139,7 @@ namespace BFS_Test
 		}
 		public List<State> Solve()
 		{
-			//List<State> ketQua = new List<State>();
+			List<State> ketQua = new List<State>();
 			Queue<State> Visited = new Queue<State>();
 			Queue<State> danhSachDinhDuyet = new Queue<State>();
 
@@ -175,32 +175,26 @@ namespace BFS_Test
 			return ketQua;
 		}
 
-		public void LanVet(/*List<State> duongDi, State n*/)
+		public void LanVet(List<State> duongDi, State n)
 		{
-			//State hienTai = n;
-			//duongDi.Add(hienTai);
+			State hienTai = n;
+			duongDi.Add(hienTai);
 
-			//while (hienTai.nutCha != null)
-			//{
-			//	hienTai = hienTai.nutCha;
-			//	duongDi.Add(hienTai);
-			//}
-			State i = trangThaiDich;
-			while(KiemTraTrangThaiTrung(trangThaiDau, trangThaiDich) == false)
+			while (hienTai.nutCha != null)
 			{
-				i.inRaMotState();
-				i = Path[i];
+				hienTai = hienTai.nutCha;
+				duongDi.Add(hienTai);
 			}
 		}
 
-		//public void inRaDuongDi()
-		//{
-		//	List<State> ketQuaCuoiCung = Solve();
-		//	foreach(var item in ketQuaCuoiCung)
-		//	{
-		//		item.inRaMotState();
-		//	}
-		//}
+		public void inRaDuongDi()
+		{
+			List<State> ketQuaCuoiCung = Solve();
+			foreach (var item in ketQuaCuoiCung)
+			{
+				item.inRaMotState();
+			}
+		}
 	}
 
 	class Program

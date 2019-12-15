@@ -10,6 +10,7 @@ namespace A_BFS
 	{
 		public List<int> trangThai { get; set; }
         public State nutCha { get; set; }
+		public int heuris;
 		//khởi tạo mặc định
         public State() { }
 
@@ -18,7 +19,19 @@ namespace A_BFS
 		{
 			this.trangThai = trangThai;
 		}
-
+		public int DemOSai(State trthaiDich)
+		{
+			int oSai = 0;
+			for (int i = 0; i < trthaiDich.trangThai.Count; i++)
+			{
+				if (this.trangThai[i] != trthaiDich.trangThai[i])
+				{
+					oSai++;
+				}
+			}
+			this.heuris = oSai;
+			return oSai;
+		}
 		//hàm này để tách từ 1 mảng truyền vào theo mỗi bước đi(trái, phải, lên, xuống) sẽ tạo ra bao nhiêu mảng nữa
 		//mỗi bước đi được sẽ đưa vào mangPhatSinh
 		public List<List<int>> PhatSinhMangTuMotMang(List<int> mangBatKy)
@@ -113,7 +126,7 @@ namespace A_BFS
 		State trangThaiDich;
 		//danh sách các trạng thái đã duyệt
         List<State> trangThaiDaDuyet = null;
-
+		public int dem = 0;
 
         public BFS(State trangThaiDau, State trangThaiDich)
 		{
@@ -147,9 +160,9 @@ namespace A_BFS
 			return contains;
 		}
 
-
 		public List<State> Solve()
 		{
+			dem = 0;
 			List<State> ketQua = new List<State>();
 			//hàng đợi enqueue thêm vào cuối, và dequeue lấy ra ở đầu và remove luôn ptu đó
 			Queue<State> danhSachDinhDuyet = new Queue<State>();
@@ -160,6 +173,7 @@ namespace A_BFS
 			{
 				State ptLayRa = danhSachDinhDuyet.Dequeue();
                 trangThaiDaDuyet.Add(ptLayRa);
+				dem++;
 				//dòng này để in ra các trạng thái mảng đã duyệt dưới dạng ma trận 3x3
 				//ptLayRa.inRaMotState();
 
@@ -188,6 +202,77 @@ namespace A_BFS
 					}
 				}
 			}
+			return ketQua;
+		}
+		public void SwapHaiTrangThai(ref State a, ref State b)
+		{
+			State temp = a;
+			a = b;
+			b = temp;
+		}
+		public void SapXepCacTrangThaiTheoHeuris(List<State> temp)
+		{
+			for (int i = 0; i < temp.Count-1; i++)
+			{
+				for (int j = i+1; j < temp.Count; j++)
+				{
+					if (temp[i].heuris > temp[j].heuris)
+					{
+						State t = temp[i];
+						temp[i] = temp[j];
+						temp[j] = t;
+					}
+				}
+			}
+		}
+		public List<State> Solve_BestFirstSearch()
+		{
+			dem = 0;
+			List<State> ketQua = new List<State>();
+			//hàng đợi enqueue thêm vào cuối, và dequeue lấy ra ở đầu và remove luôn ptu đó
+			List<State> danhSachDinhDuyet = new List<State>();
+
+			danhSachDinhDuyet.Add(trangThaiDau);
+
+			while (danhSachDinhDuyet.Count > 0)
+			{
+				State ptLayRa = danhSachDinhDuyet[0];
+				dem++;
+				trangThaiDaDuyet.Add(ptLayRa);
+				danhSachDinhDuyet.RemoveAt(0);
+			
+				//dòng này để in ra các trạng thái mảng đã duyệt dưới dạng ma trận 3x3
+				//ptLayRa.inRaMotState();
+
+				if (ptLayRa.KiemTraDenDich(trangThaiDich) == true)
+				{
+					Console.WriteLine("Ban da chien thang!.....");
+					break;
+				}
+
+				//ptLayRa đem đi phân tách coi được mấy trạng thái
+				List<State> hungPhanTachTrangThai = ptLayRa.PhanTachTrangThai();
+				foreach (var item in hungPhanTachTrangThai)
+				{
+					if (item.KiemTraDenDich(trangThaiDich) == true)
+					{
+						Console.WriteLine("Ban da chien thang!.....");
+						//lằn vết lúc này sẽ trả về danh sách đường đi nhưng bị ngược => qua nút Giải reverse nó
+						LanVet(ketQua, item);
+						//in ra đường đi tìm được trên console dưới dạng ma trận 3x3
+						inRaDuongDi(ketQua);
+						Console.WriteLine(dem);
+						return ketQua;
+					}
+					if (!KiemTraTrangThaiChuaTrongList(trangThaiDaDuyet, item))
+					{
+						item.DemOSai(trangThaiDich);
+						danhSachDinhDuyet.Add(item);
+						SapXepCacTrangThaiTheoHeuris(danhSachDinhDuyet);
+					}
+				}
+			}
+
 			return ketQua;
 		}
 		//lằn vết để đưa mỗi nút cha đã gán trước đó vào trong list kết quả

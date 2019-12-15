@@ -39,6 +39,8 @@
 			this.btnPrev = new System.Windows.Forms.Button();
 			this.btnNext = new System.Windows.Forms.Button();
 			this.btnGiaiToiUu = new System.Windows.Forms.Button();
+			this.lblTimeGiai = new System.Windows.Forms.Label();
+			this.lblBuocDuyet = new System.Windows.Forms.Label();
 			this.gbKhung.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbx1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbx2)).BeginInit();
@@ -167,7 +169,7 @@
 			this.gbAnhGoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.gbAnhGoc.Location = new System.Drawing.Point(535, 12);
 			this.gbAnhGoc.Name = "gbAnhGoc";
-			this.gbAnhGoc.Size = new System.Drawing.Size(315, 282);
+			this.gbAnhGoc.Size = new System.Drawing.Size(327, 247);
 			this.gbAnhGoc.TabIndex = 0;
 			this.gbAnhGoc.TabStop = false;
 			this.gbAnhGoc.Text = "Hình Gốc";
@@ -177,7 +179,7 @@
 			this.btnChoiLai.BackColor = System.Drawing.Color.LightCoral;
 			this.btnChoiLai.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btnChoiLai.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnChoiLai.Location = new System.Drawing.Point(495, 412);
+			this.btnChoiLai.Location = new System.Drawing.Point(495, 445);
 			this.btnChoiLai.Name = "btnChoiLai";
 			this.btnChoiLai.Size = new System.Drawing.Size(59, 42);
 			this.btnChoiLai.TabIndex = 1;
@@ -190,7 +192,7 @@
 			this.btnThoat.BackColor = System.Drawing.Color.LightCoral;
 			this.btnThoat.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btnThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnThoat.Location = new System.Drawing.Point(843, 412);
+			this.btnThoat.Location = new System.Drawing.Point(843, 443);
 			this.btnThoat.Name = "btnThoat";
 			this.btnThoat.Size = new System.Drawing.Size(59, 42);
 			this.btnThoat.TabIndex = 1;
@@ -212,10 +214,10 @@
 			// lblThoiGianDem
 			// 
 			this.lblThoiGianDem.AutoSize = true;
-			this.lblThoiGianDem.Font = new System.Drawing.Font("Impact", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblThoiGianDem.Location = new System.Drawing.Point(578, 306);
+			this.lblThoiGianDem.Font = new System.Drawing.Font("Impact", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblThoiGianDem.Location = new System.Drawing.Point(614, 273);
 			this.lblThoiGianDem.Name = "lblThoiGianDem";
-			this.lblThoiGianDem.Size = new System.Drawing.Size(264, 80);
+			this.lblThoiGianDem.Size = new System.Drawing.Size(201, 60);
 			this.lblThoiGianDem.TabIndex = 3;
 			this.lblThoiGianDem.Text = "00:00:00";
 			// 
@@ -230,7 +232,7 @@
 			this.btnTamDung.BackColor = System.Drawing.Color.LightCoral;
 			this.btnTamDung.Enabled = false;
 			this.btnTamDung.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnTamDung.Location = new System.Drawing.Point(576, 412);
+			this.btnTamDung.Location = new System.Drawing.Point(575, 445);
 			this.btnTamDung.Name = "btnTamDung";
 			this.btnTamDung.Size = new System.Drawing.Size(66, 42);
 			this.btnTamDung.TabIndex = 4;
@@ -244,7 +246,7 @@
 			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.button1.ForeColor = System.Drawing.SystemColors.Control;
-			this.button1.Location = new System.Drawing.Point(669, 412);
+			this.button1.Location = new System.Drawing.Point(668, 443);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(59, 42);
 			this.button1.TabIndex = 1;
@@ -282,7 +284,7 @@
 			this.btnGiaiToiUu.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btnGiaiToiUu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnGiaiToiUu.ForeColor = System.Drawing.SystemColors.Control;
-			this.btnGiaiToiUu.Location = new System.Drawing.Point(756, 412);
+			this.btnGiaiToiUu.Location = new System.Drawing.Point(756, 445);
 			this.btnGiaiToiUu.Name = "btnGiaiToiUu";
 			this.btnGiaiToiUu.Size = new System.Drawing.Size(59, 42);
 			this.btnGiaiToiUu.TabIndex = 7;
@@ -290,11 +292,34 @@
 			this.btnGiaiToiUu.UseVisualStyleBackColor = false;
 			this.btnGiaiToiUu.Click += new System.EventHandler(this.button2_Click_1);
 			// 
+			// lblTimeGiai
+			// 
+			this.lblTimeGiai.AutoSize = true;
+			this.lblTimeGiai.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTimeGiai.Location = new System.Drawing.Point(620, 355);
+			this.lblTimeGiai.Name = "lblTimeGiai";
+			this.lblTimeGiai.Size = new System.Drawing.Size(183, 20);
+			this.lblTimeGiai.TabIndex = 8;
+			this.lblTimeGiai.Text = "Thoi gian giai : 0.0 ms";
+			this.lblTimeGiai.Click += new System.EventHandler(this.lblTimeGiai_Click);
+			// 
+			// lblBuocDuyet
+			// 
+			this.lblBuocDuyet.AutoSize = true;
+			this.lblBuocDuyet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblBuocDuyet.Location = new System.Drawing.Point(620, 387);
+			this.lblBuocDuyet.Name = "lblBuocDuyet";
+			this.lblBuocDuyet.Size = new System.Drawing.Size(144, 20);
+			this.lblBuocDuyet.TabIndex = 9;
+			this.lblBuocDuyet.Text = "Số bước duyệt: 0";
+			// 
 			// frmPuzzleGame
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(914, 495);
+			this.ClientSize = new System.Drawing.Size(914, 555);
+			this.Controls.Add(this.lblBuocDuyet);
+			this.Controls.Add(this.lblTimeGiai);
 			this.Controls.Add(this.btnGiaiToiUu);
 			this.Controls.Add(this.btnNext);
 			this.Controls.Add(this.btnPrev);
@@ -353,6 +378,8 @@
         private System.Windows.Forms.Button btnPrev;
         private System.Windows.Forms.Button btnNext;
 		private System.Windows.Forms.Button btnGiaiToiUu;
+		private System.Windows.Forms.Label lblTimeGiai;
+		private System.Windows.Forms.Label lblBuocDuyet;
 	}
 }
 

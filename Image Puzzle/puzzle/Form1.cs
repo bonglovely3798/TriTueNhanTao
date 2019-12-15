@@ -1,6 +1,7 @@
 ﻿using A_BFS;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -19,7 +20,19 @@ namespace WindowsFormsApplication1
         List<State> ketQuaCuoiCung = new List<State>();
         int currentState = 0;
 
-        public frmPuzzleGame()
+		List<int> mangCuoi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+		// Test case 1
+		List<int> tesCase1 = new List<int> { 1, 2, 9, 3, 4, 6, 7, 5, 8 };
+		List<int> tesCase2 = new List<int> { 4, 5, 9, 3, 1, 6, 7, 2, 8 };
+		List<int> tesCase3 = new List<int> { 4, 9, 5, 3, 1, 6, 7, 2, 8 };
+		List<int> tesCase4 = new List<int> { 1, 2, 9, 3, 4, 6, 7, 5, 8 };
+		List<int> tesCase5 = new List<int> { 1, 2, 9, 3, 4, 6, 7, 5, 8 };
+
+
+		List<List<int>> mangTestCase = new List<List<int>>();
+
+		public frmPuzzleGame()
         {
             InitializeComponent();
 			//khởi tạo mảng gốc để so sánh với kqua người chơi
@@ -27,7 +40,17 @@ namespace WindowsFormsApplication1
 			Properties.Resources._5, Properties.Resources._6, Properties.Resources._7, Properties.Resources._8, Properties.Resources._null });
             lblBuocDi.Text += soBuocDi;
             lblThoiGianDem.Text = "00:00:00";
-        }
+
+			// Add test case
+
+			mangTestCase.Add(tesCase1);
+			mangTestCase.Add(tesCase2);
+			mangTestCase.Add(tesCase3);
+			mangTestCase.Add(tesCase4);
+			mangTestCase.Add(tesCase5);
+
+
+		}
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -36,21 +59,36 @@ namespace WindowsFormsApplication1
 
         List<int> ChoiLai()
         {
-			List<int> mangRandom = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+			//List<int> mangRandom = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+			//do
+			//         {
+			//             int j;
+			//	//thư viện LinQ hổ trợ hàm trộn mảng (search trên stackoverflow)
+			//	mangRandom = mangRandom.OrderBy(a => Guid.NewGuid()).ToList();
+
+			//             for (int i = 0; i < 9; i++)
+			//             {
+			//		((PictureBox)gbKhung.Controls[i]).Image = mangGoc[mangRandom[i]-1];
+			//		if (mangRandom[i] == 9)
+			//			chiSoOTrong = i;
+			//	}
+			//         } while (KiemTraWin());
+			//return mangRandom;
+
+			Random r = new Random();
+			int j = r.Next(0, 5);
+			j = 0;
+			List<int> mangRandom = mangTestCase[j];
+
 			do
-            {
-                int j;
-                
-
-				mangRandom = mangRandom.OrderBy(a => Guid.NewGuid()).ToList();
-
-                for (int i = 0; i < 9; i++)
-                {
-					((PictureBox)gbKhung.Controls[i]).Image = mangGoc[mangRandom[i]-1];
+			{
+				for (int i = 0; i < 9; i++)
+				{
+					((PictureBox)gbKhung.Controls[i]).Image = mangGoc[mangRandom[i] - 1];
 					if (mangRandom[i] == 9)
 						chiSoOTrong = i;
 				}
-            } while (KiemTraWin());
+			} while (KiemTraWin());
 			return mangRandom;
 		}
 
@@ -85,35 +123,35 @@ namespace WindowsFormsApplication1
 			KiemTraThoatChuongTrinh(sender, e as FormClosingEventArgs);
 		}
 
-        public void renderMotO(int j, List<int> mang)
-        {
-            //sai chổ này
-            //((PictureBox)gbKhung.Controls[j]).Image = ((PictureBox)gbKhung.Controls[j]).Image;
-            ((PictureBox)gbKhung.Controls[j]).Image = mangGoc[mang[j]];
-        }
-
-
         private void btnGiai_Click(object sender, EventArgs e)
         {
-			//List<int> mangDau = ChoiLai();
-			List<int> mangDau = new List<int> { 1, 2, 9, 3, 4, 6, 7, 5, 8 };
-            List<int> mangCuoi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
+			List<int> mangDau = ChoiLai();
             State trThaiDau = new State(mangDau);
             State trThaiCuoi = new State(mangCuoi);
             BFS bfs = new BFS(trThaiDau, trThaiCuoi);
 
-            this.ketQuaCuoiCung = bfs.Solve();
-			this.ketQuaCuoiCung.Reverse();
-			this.lblBuocDi.Text = "Số Bước Đi: " + this.ketQuaCuoiCung.Count.ToString();
+			Stopwatch timer_tmp = new Stopwatch();
+			timer_tmp.Reset();
+			lblTimeGiai.Text = "Thời gian giải: 0.0 ms";
+			timer_tmp.Start();
+			
+			this.ketQuaCuoiCung = bfs.Solve();
 
+			timer.Stop();
+			lblTimeGiai.Text = "Thời gian giải: " + timer_tmp.Elapsed.TotalMilliseconds.ToString() + " ms";
+
+			//đảo mảng lại vì kqua tra về là đường đi ngược từ dưới lên
+			this.ketQuaCuoiCung.Reverse();
+			this.lblBuocDuyet.Text = "Số Bước Duyệt: " + bfs.dem.ToString();
 			this.currentState = 0;
+
+			this.lblBuocDi.Text = "Số Bước Đi: " + (currentState + 1).ToString() + "/" + this.ketQuaCuoiCung.Count.ToString();
+
 			State tmp = this.ketQuaCuoiCung[this.currentState];
 			List<int> mang = tmp.trangThai;
 			for (int j = 0; j < mang.Count; j++)
 			{
 				((PictureBox)gbKhung.Controls[j]).Image = mangGoc[mang[j]-1];
-
 			}
 		}
 
@@ -190,9 +228,16 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
+			//nút lui lại đến trạng thái cuối cùng rồi thì ngưng nên mới có điều kiện > 0
+
+
 			if(currentState > 0)
 			{
 				currentState -= 1;
+
+				this.lblBuocDi.Text = "Số Bước Đi: " + (currentState + 1).ToString() + "/" + this.ketQuaCuoiCung.Count.ToString();
+
+
 				State trt = ketQuaCuoiCung[currentState];
 
 				for (int j = 0; j < trt.trangThai.Count; j++)
@@ -204,25 +249,61 @@ namespace WindowsFormsApplication1
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+			//nút lui tới đến trạng thái cuối cùng rồi thì ngưng nên mới có điều kiện < chiều dài của dsach đường đi tìm dc
 			if (currentState < ketQuaCuoiCung.Count - 1)
 			{
 				currentState += 1;
+
+				this.lblBuocDi.Text = "Số Bước Đi: " + (currentState + 1).ToString() + "/" + this.ketQuaCuoiCung.Count.ToString();
+
 				State trt = ketQuaCuoiCung[currentState];
 
 				for (int j = 0; j < trt.trangThai.Count; j++)
 				{
 					((PictureBox)gbKhung.Controls[j]).Image = mangGoc[trt.trangThai[j] - 1];
-
 				}
 			}				
 		}
 
 		private void button2_Click_1(object sender, EventArgs e)
 		{
+			List<int> mangDau = ChoiLai();
+			//List<int> mangDau = new List<int> { 1, 2, 9, 3, 4, 6, 7, 5, 8 };
+			//List<int> mangCuoi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+			State trThaiDau = new State(mangDau);
+			State trThaiCuoi = new State(mangCuoi);
+			BFS bfs = new BFS(trThaiDau, trThaiCuoi);
+
+			Stopwatch timer_tmp = new Stopwatch();
+			timer_tmp.Reset();
+			lblTimeGiai.Text = "Thời gian giải: 0.0 ms";
+			timer_tmp.Start();
+
+			this.ketQuaCuoiCung = bfs.Solve_BestFirstSearch();
+			timer.Stop();
+			lblTimeGiai.Text = "Thời gian giải: " + timer_tmp.Elapsed.TotalMilliseconds.ToString() + " ms";
+
+			//đảo mảng lại vì kqua tra về là đường đi ngược từ dưới lên
+			this.ketQuaCuoiCung.Reverse();
+			this.lblBuocDuyet.Text = "Số Bước Duyệt: " + bfs.dem.ToString();
+
+			this.currentState = 0;
+			this.lblBuocDi.Text = "Số Bước Đi: " + (currentState + 1).ToString() + "/" + this.ketQuaCuoiCung.Count.ToString();
+			State tmp = this.ketQuaCuoiCung[this.currentState];
+			List<int> mang = tmp.trangThai;
+			for (int j = 0; j < mang.Count; j++)
+			{
+				((PictureBox)gbKhung.Controls[j]).Image = mangGoc[mang[j] - 1];
+			}
+		}
+
+		private void lblTimeGiai_Click(object sender, EventArgs e)
+		{
 
 		}
 
-		//sự kiện click và nút tạm dừng
+		//sự kiện click và nút tạm dừng, tạm dừng thì tắt màn hình lại không cho người chơi xem các ô nữa
 		private void PauseOrResume(object sender, EventArgs e)
         {
             if (btnTamDung.Text == "Tạm Dừng")

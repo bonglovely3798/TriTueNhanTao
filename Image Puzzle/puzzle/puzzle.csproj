@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="A_Star.cs" />
     <Compile Include="BFS.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
