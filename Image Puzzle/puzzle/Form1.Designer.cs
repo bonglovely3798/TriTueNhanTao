@@ -264,7 +264,7 @@
 			this.btnPrev.TabIndex = 5;
 			this.btnPrev.Text = "<< Đi Lui";
 			this.btnPrev.UseVisualStyleBackColor = false;
-			this.btnPrev.Click += new System.EventHandler(this.button2_Click);
+			this.btnPrev.Click += new System.EventHandler(this.btnDiLui_Click);
 			// 
 			// btnNext
 			// 
@@ -276,7 +276,7 @@
 			this.btnNext.TabIndex = 6;
 			this.btnNext.Text = "Đi Tới >>";
 			this.btnNext.UseVisualStyleBackColor = false;
-			this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+			this.btnNext.Click += new System.EventHandler(this.btnDiToi_Click);
 			// 
 			// btnGiaiToiUu
 			// 
@@ -290,7 +290,7 @@
 			this.btnGiaiToiUu.TabIndex = 7;
 			this.btnGiaiToiUu.Text = "Giải Tối Ưu";
 			this.btnGiaiToiUu.UseVisualStyleBackColor = false;
-			this.btnGiaiToiUu.Click += new System.EventHandler(this.button2_Click_1);
+			this.btnGiaiToiUu.Click += new System.EventHandler(this.btnGiaiToiUu_Click);
 			// 
 			// lblTimeGiai
 			// 
