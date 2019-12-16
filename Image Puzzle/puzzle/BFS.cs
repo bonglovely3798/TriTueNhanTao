@@ -19,6 +19,7 @@ namespace A_BFS
 		{
 			this.trangThai = trangThai;
 		}
+		//đếm ô sai của một trạng thái so với trạng thái đích, chính là giá trị của heuristic
 		public int DemOSai(State trthaiDich)
 		{
 			int oSai = 0;
@@ -204,12 +205,6 @@ namespace A_BFS
 			}
 			return ketQua;
 		}
-		public void SwapHaiTrangThai(ref State a, ref State b)
-		{
-			State temp = a;
-			a = b;
-			b = temp;
-		}
 		public void SapXepCacTrangThaiTheoHeuris(List<State> temp)
 		{
 			for (int i = 0; i < temp.Count-1; i++)
@@ -218,6 +213,7 @@ namespace A_BFS
 				{
 					if (temp[i].heuris > temp[j].heuris)
 					{
+						//hoán đổi 2 trạng thái
 						State t = temp[i];
 						temp[i] = temp[j];
 						temp[j] = t;
